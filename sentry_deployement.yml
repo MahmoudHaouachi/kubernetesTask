@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentry
+  labels:
+    app: kubtasksentry
+    
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kubtasksentry
+    spec:
+      containers:
+
+      - name: redis
+        image: redis:3.2-alpine
+        
+      - name: postgres
+        image: postgres:9.5
+        env:
+          - name: POSTGRES_PASSWORD
+            value: sentry
+          - name: POSTGRES_USE
+            value: sentry
+        
+      - name: sentry
+        image: sentry
+        env:
+          - name: SENTRY_SECRET_KEY
+            value: toor
+            
+      - name: worker
+        image: sentry
+        env:
+          - name: SENTRY_SECRET_KEY
+            value: toor
+        args:
+        - run
+        - worker
+        
+      - name: cron
+        image: sentry
+        env:
+          - name: SENTRY_SECRET_KEY
+            value: toor
+        args:
+        - run
+        - cron
+      
+
+     

@@ -29,25 +29,21 @@ spec:
             value: sentry
         
       - name: sentry
-        image: sentry
-        env:
-          - name: SENTRY_SECRET_KEY
-            value: toor
+        image: sentry-onpremise
+        args:
+        - run
+        - web
+        ports:
+        - containerPort: 9000
             
       - name: worker
-        image: sentry
-        env:
-          - name: SENTRY_SECRET_KEY
-            value: toor
+        image: sentry-onpremise
         args:
         - run
         - worker
         
       - name: cron
-        image: sentry
-        env:
-          - name: SENTRY_SECRET_KEY
-            value: toor
+        image: sentry-onpremise
         args:
         - run
         - cron

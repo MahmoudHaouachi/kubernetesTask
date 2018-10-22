@@ -3,10 +3,13 @@ kind: Deployment
 metadata:
   name: sentry
   labels:
-    app: kubtasksentry
+    name: kubtasksentry
     
 spec:
   replicas: 1
+    selector:
+       matchLabels: 
+          app: kubtasksentry        
   template:
     metadata:
       labels:
